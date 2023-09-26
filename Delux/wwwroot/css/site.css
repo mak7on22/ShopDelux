@@ -14,11 +14,11 @@ html {
 }
 .searh {
     display: flex;
-    align-items: center;
-    padding: 7px 50px 5px 50px;
-    border-radius: 15px;
-    background-color: beige;
-    color: forestgreen;
+    padding: 7px 71px 5px 50px;
+    border-radius: 10px;
+    background-color: white;
+    color: #2eb7bc;
+    font-weight: bold;
 }
 .dropdown-menus {
     position: absolute;
@@ -37,6 +37,10 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+.resu {
+    color: #f7baba;
+    font-weight: bold;
+}
 /*/////////////////////////////////////*/
 .input-container {
     position: relative;
@@ -52,22 +56,26 @@ body {
         padding: 5px 0;
         background-color: transparent;
         outline: none;
+        color: azure;
+        font-weight: normal;
     }
 
     .input-container .label {
         position: absolute;
         top: 0;
         left: 0;
-        color: #ccc;
+        color: #fff;
         transition: all 0.3s ease;
         pointer-events: none;
+        font-weight: bold;
     }
 
     .input-container input[type="text"]:focus ~ .label,
     .input-container input[type="text"]:valid ~ .label {
         top: -20px;
         font-size: 16px;
-        color: #333;
+        color: #fff;
+        font-weight: bold;
     }
 
     .input-container .underline {

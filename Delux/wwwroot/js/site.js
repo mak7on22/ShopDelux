@@ -83,33 +83,34 @@ $(document).ready(function () {
     $("#searchInput").on("keyup", function () {
         var searchTerm = $(this).val();
         console.log("Search term:", searchTerm);
+        setTimeout(function () {
+            $.ajax({
+                url: '/Products/Search/',
+                data: { term: searchTerm },
+                method: "GET",
+                success: function (data) {
+                    console.log("Search results:", data);
+                    $("#searchResults").empty();
+                    if (data.length > 0) {
+                        var products = data.split(';');
+                        $.each(products, function (index, product) {
+                            var productData = product.split(',');
 
-        $.ajax({
-            url: '/Products/Search/',
-            data: { term: searchTerm },
-            method: "GET",
-            success: function (data) {
-                console.log("Search results:", data);
-                $("#searchResults").empty();
-                if (data.length > 0) {
-                    var products = data.split(';'); 
-                    $.each(products, function (index, product) {
-                        var productData = product.split(','); 
-
-                        var button = $("<button>")
-                            .addClass("searh")
-                            .text(productData[1])
-                            .click(function () {
-                                console.log("Clicked Product:", productData);
-                                window.location.href = '/Products/Details/' + productData[0]; // Используем ProductId
-                            });
-                        $("#searchResults").append(button);
-                    });
-                } else {
-                    $("#searchResults").append("<p>Нет результатов.</p>");
+                            var button = $("<button>")
+                                .addClass("searh")
+                                .text(productData[1])
+                                .click(function () {
+                                    console.log("Clicked Product:", productData);
+                                    window.location.href = '/Products/Details/' + productData[0]; // Используем ProductId
+                                });
+                            $("#searchResults").append(button);
+                        });
+                    } else {
+                        $("#searchResults").append("<p class='resu'>Нет результатов.</p>");
+                    }
                 }
-            }
-        });
+            });
+        },30);
     });
 });
 
