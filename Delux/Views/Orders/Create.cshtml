@@ -1,0 +1,69 @@
+﻿@model Delux.Models.Order
+
+@{
+    ViewData["Title"] = "Create";
+    var productName = ViewData["ProductName"] as string;
+    var productUrl = ViewData["ProductUrl"] as string;
+}
+
+<h1>Создание</h1>
+
+<h4>Заказа</h4>
+<hr />
+<div class="ramka">
+    <div class="ramka2">
+        <div class="row rowss rowsOrderCreate">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="NameUser" class="control-label Tags" required></label>
+                        <input asp-for="NameUser" class=" tabs" required />
+                        <span asp-validation-for="NameUser" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label Tags" required></label>
+                        <input asp-for="Address" class=" tabs" required />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactPhone" class="control-label Tags" required></label>
+                        <input asp-for="ContactPhone" class="tabs" required />
+                        <span asp-validation-for="ContactPhone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label Tags" required></label>
+                        <input asp-for="Email" class=" tabs" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span asp-validation-for="ProductId" asp-items="@ViewBag.ProductId">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="ProductId" class="form-control visually-hidden tabs" required />
+                        <span asp-validation-for="ProductId" class="text-danger"></span>
+                    </div>
+                <dd class="col-sm-10 prdName">
+                        @productName
+                </dd>
+                <div class="form-group save">
+                    <button class="pkm" type="submit" value="Create">Оформить</button>
+                </div>
+                </form>
+                <div>
+                    <button class="pkm pkminfo"><a asp-action="Index">Назад</a></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ">
+            <img class="imgDetals" src="@productUrl" alt="Изображение товара" />
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

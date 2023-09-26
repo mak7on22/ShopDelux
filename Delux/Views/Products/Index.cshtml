@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Delux.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<h1>Товары</h1>
+
+<p>
+    <button type="button" class="btn btn-success"><a class="news" asp-action="Create">Добавить товар</a></button>
+</p>
+<div class="input-container">
+    <input type="text" id="searchInput" required="">
+    <label for="input" class="label">Поиск по названиюt</label>
+    <div class="underline" id="searchResults"></div>
+</div>
+<partial name="_pager" model="@pager" />
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                <a asp-action="Index" class="BrandSorts" asp-route-sortState="@ViewBag.NameSort">@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                <a asp-action="Index" class="ProductSort" asp-route-sortState="@ViewBag.PriceSort">@Html.DisplayNameFor(model => model.Price)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                <a asp-action="Index" class="ProductSort" asp-route-sortState="@ViewBag.DataCteateSort">@Html.DisplayNameFor(model => model.CreatedAt)</a>
+            </th>
+            <th>
+                <a asp-action="Index" class="ProductSort" asp-route-sortState="@ViewBag.DateReplSort">@Html.DisplayNameFor(model => model.UpdatedAt)</a>
+            </th>
+            <th>
+                <a asp-action="Index" class="ProductSort" asp-route-sortState="@ViewBag.CategorySort">@Html.DisplayNameFor(model => model.Categories)</a>
+            </th>
+            <th>
+                <a asp-action="Index" class="BrandSortsData" asp-route-sortState="@ViewBag.BrandSort">@Html.DisplayNameFor(model => model.Brands)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)$
+                </td>
+                <td class="ssas">
+                    <div class="form-group">
+                        <img class="imgDetals3" src="@Url.Content(item.ImageUrl)" alt="Изображение товара" />
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categories.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brands.BrandName)
+                </td>
+                <td>
+                    <button class="pkm"><a asp-action="Edit" asp-route-id="@item.ProductId">Изменить</a></button>
+                    <button class="pkm pkminfo"><a asp-action="Details" asp-route-id="@item.ProductId">Детали</a></button>
+                    <button class="pkm pkmdel"><a asp-action="Delete" asp-route-id="@item.ProductId">Удалить</a></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ <partial name="_pager" model="@pager" />

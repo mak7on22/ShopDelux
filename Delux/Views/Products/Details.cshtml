@@ -1,0 +1,190 @@
+﻿@model Delux.Models.Product
+
+
+
+
+
+@{
+    ViewData["Title"] = "Details";
+    var ReviewId = ViewData["ReviewId"];
+}
+
+<h1>Детали</h1>
+
+<div>
+    <h4>Товара</h4>
+    <hr />
+    <div class="ramka">
+        <dl class="row rowss">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Price)$
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Brands)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Brands.BrandName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd class="col-sm-10">
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label textDel"></label>
+                    <img class="imgDetals" src="@Url.Content(Model.ImageUrl)" alt="Изображение товара" />
+                </div>
+            </dd>
+        </dl>
+        @{
+            List<Currency> currencyRates = ViewBag.CurrencyRates;
+            <h2 class="PriceSmart">Стоимость @Html.DisplayFor(model => model.Name) в разных валютах</h2>
+            <div class="valute">
+                @foreach (var rate in currencyRates)
+                {
+                    decimal priseInCurrency = Model.Price * rate.CurrencyRate;
+                    // Используйте форматирование строк для ограничения числа знаков после запятой
+                    <div class="currency-item col-sm-2">
+                        <img src="~/World/@(rate.CurrencyCode).png" alt="Флаг @rate.CurrencyName" />
+                        <p class="textValut">@rate.CurrencyName: @priseInCurrency.ToString("0.00") @rate.CurrencyCode</p>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+<div class="butss">
+    <a asp-controller="Orders" asp-for="ProductId" asp-action="Create" asp-route-ProductId="@Model.ProductId" class="pkm">Заказать</a>
+    <a asp-action="Index" class="pkm pkminfo">Назад</a>
+</div>
+<div class="Reviewss">
+    <div class="formsOtziv">
+        <div class="form-container">
+            <!-- Форма для отзывов -->
+            <form id="reviewForm" asp-controller="Phones" asp-action="AddReview" data-phone-id="@Model?.ProductId" class="form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <span asp-validation-for="ReviewId" asp-items="@ReviewId">
+                    </span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="ReviewId" class="form-control visually-hidden tabs" required />
+                    <span asp-validation-for="ReviewId" class="text-danger"></span>
+                </div>
+
+                <div class="rating">
+                    <input asp-for="AverageRating" value="5" name="rating" id="star5" type="radio" data-rating="5">
+                    <label asp-for="AverageRating" for="star5"></label>
+                    <input asp-for="AverageRating" value="4" name="rating" id="star4" type="radio" data-rating="4">
+                    <label asp-for="AverageRating" for="star4"></label>
+                    <input asp-for="AverageRating" value="3" name="rating" id="star3" type="radio" data-rating="3">
+                    <label asp-for="AverageRating" for="star3"></label>
+                    <input asp-for="AverageRating" value="2" name="rating" id="star2" type="radio" data-rating="2">
+                    <label asp-for="AverageRating" for="star2"></label>
+                    <input asp-for="AverageRating" value="1" name="rating" id="star1" type="radio" data-rating="1">
+                    <label asp-for="AverageRating" for="star1"></label>
+                </div>
+                <div class="form-group">
+                    <label for="Comment">Комментарий</label>
+                    <textarea id="Comment" name="Comment" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Author">Автор</label>
+                    <input type="text" id="Author" name="Author" maxlength="10" required>
+                </div>
+                <button class="form-submit-btn" type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+    <div class="form-container">
+        <h4 class="Otcenka">Оценка отзывов</h4>
+        @{
+            int? ratings = 0;
+            int review = Model.Reviews.Count;
+
+            if (review > 0)
+            {
+                foreach (var a in Model.Reviews)
+                    ratings += a.Rating;
+                double? sum = (ratings * 1.0) / review;
+                <p class="Sr">Средняя оценка: @string.Format("{0:F2}", sum)</p>
+                <div class="fire">
+                    <div class="fire-left">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                    </div>
+                    <div class="fire-center">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                    </div>
+                    <div class="fire-right">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                    </div>
+                    <div class="fire-bottom">
+                        <div class="main-fire"></div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>Нет отзывов</p>
+            }
+        }
+    </div>
+    <div class="State">
+        <h4>Отзывы и оценки</h4>
+        <div class="scrollable-list">
+            @if (Model.Reviews != null && Model.Reviews.Count > 0)
+            {
+                <ul class="uls">
+                    @functions {
+                    string GetRatingStars(int rating)
+                    {
+                        var stars = "";
+                        for (var i = 1; i <= 5; i++)
+                        {
+                            if (i <= rating)
+                            {
+                                stars += "★"; // Звездочка как символ Unicode
+                            }
+                            else
+                            {
+                                stars += "☆"; // Звездочка как символ Unicode
+                            }
+                        }
+                        return stars;
+                    }
+                }
+
+                @foreach (var a in Model.Reviews)
+                    {
+                        <li class="liss">
+                            <strong>Автор:</strong> @a.Author<br />
+                            <strong>Оценка:</strong> <span class="rating-stars">@GetRatingStars(a.Rating)</span><br />
+                            <strong>Комментарий:</strong> @a.Comment<br />
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Пока нет отзывов.</p>
+            }
+        </div>
+    </div>
+</div>

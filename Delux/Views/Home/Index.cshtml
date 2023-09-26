@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Delux.Models.Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+<h1>Товары</h1>
+<partial name="_pager" model="@pager" />
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img class="imgDetals2" src="@Url.Content(item.ImageUrl)">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <div class="btn-group">
+                        <div class="btn-group dropstart" role="group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropstart</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                @{
+                                    decimal phonePriceInDollars = item.Price;
+                                    List<Currency> currencyRates = ViewBag.CurrencyRates;
+                                    @foreach (var rate in currencyRates)
+                                    {
+                                        decimal priceInCurrency = phonePriceInDollars * rate.CurrencyRate;
+                                        <li class="valuts">
+                                            <img src="~/World/@(rate.CurrencyCode).png" alt="Флаг @rate.CurrencyName" />
+                                            <p class="textValut">@rate.CurrencyName: @priceInCurrency</p>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <p type="button" class="btn">
+                        <p class="card-text">
+                                @item.Price $ <img src="~/World/Usa.png" alt="Флаг Америки" />
+                        </p>
+                    </div>
+                    <a href="@Url.Action("Details", "Products", new { id = item.ProductId })" class="btn btn-info">Инфо</a>
+                    <a asp-controller="Orders" asp-for="ProductId" asp-action="Create" asp-route-ProductId="@item.ProductId" class="btn btn-success">Заказать</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<partial name="_pager" model="@pager" />

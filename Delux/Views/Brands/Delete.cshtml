@@ -1,0 +1,90 @@
+﻿@model Delux.Models.Brand
+
+
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Удаление</h1>
+
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    <h4>Бренд</h4>
+    <hr />
+    <dl class="row tables">
+        <dt class="col-sm-2 table textstable">
+            @Html.DisplayNameFor(model => model.BrandName)
+        </dt>
+        <dd class="col-sm-10 table textstable">
+            @Html.DisplayFor(model => model.BrandName)
+        </dd>
+        <dt class="col-sm-2 table textstable">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10 table textstable">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2 table textstable">
+            @Html.DisplayNameFor(model => model.FoundationDate)
+        </dt>
+        <dd class="col-sm-10 table textstable">
+            @Html.DisplayFor(model => model.FoundationDate)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <div class="knopka">
+            <button class="pkm pkmdel" type="submit" value="Delete">
+                <input type="hidden" asp-for="BrandId" />Удалить
+            </button>
+            <button class="pkm"><a asp-action="Index">Назад</a></button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+@* @{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Brand</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BrandName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BrandName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FoundationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FoundationDate)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="BrandId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+ *@

@@ -1,0 +1,30 @@
+﻿@model Delux.Models.Category
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Удаление</h1>
+
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    <h4>Категория</h4>
+    <hr />
+    <dl class="row tables">
+        <dt class="col-sm-2 table textstable">
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+        <dd class="col-sm-10 table textstable">
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <div class="knopka">
+            <button class="pkm pkmdel" type="submit" value="Delete">
+                <input type="hidden" asp-for="CategoryId" />Удалить
+            </button>
+            <button class="pkm"><a asp-action="Index">Назад</a></button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Delux.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Категории</h1>
+
+<p>
+    <button type="button" class="btn btn-success"><a class="news" asp-action="Create">Добавить категорию</a></button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="name">
+                <a asp-action="Index" class="Sorts" asp-route-sortState="@ViewBag.NameSort">@Html.DisplayNameFor(model => model.CategoryName)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="name">
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    <button class="pkm"><a asp-action="Edit" asp-route-id="@item.CategoryId">Изменить</a></button>
+                    <button class="pkm pkmdel"><a asp-action="Delete" asp-route-id="@item.CategoryId">Удалить</a></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+﻿@model Delux.Models.Order
+
+@{
+    ViewData["Title"] = "Delete";
+    var productName = ViewData["ProductName"] as string;
+}
+
+<h1>Отмена заказа</h1>
+
+<h3>Вы действительно хотите отменить?</h3>
+<div>
+    <h4>Заказ</h4>
+    <hr />
+    <div class="ramka">
+        <dl class="row rowss">
+            <dt class="col-sm-2 textstable">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </dt>
+            <dd class="col-sm-10 textstable">
+                @Html.DisplayFor(model => model.OrderDate)
+            </dd>
+            <dt class="col-sm-2 textstable">
+                @Html.DisplayNameFor(model => model.NameUser)
+            </dt>
+            <dd class="col-sm-10 textstable">
+                @Html.DisplayFor(model => model.NameUser)
+            </dd>
+            <dt class="col-sm-2 textstable">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-sm-10 textstable">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt class="col-sm-2 textstable">
+                @Html.DisplayNameFor(model => model.ContactPhone)
+            </dt>
+            <dd class="col-sm-10 textstable">
+                @Html.DisplayFor(model => model.ContactPhone)
+            </dd>
+            <dt class="col-sm-2 textstable">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10 textstable">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2 textstable">
+                @Html.DisplayNameFor(model => model.Products.Name)
+            </dt>
+            <dd class="col-sm-10 textstable">
+                @productName
+            </dd>
+        </dl>
+    </div>
+    <form asp-action="Delete">
+        <div class="knopka">
+            <button class="pkm pkmdel" type="submit" value="Delete">
+                <input type="hidden" asp-for="OrderId" />Отменить
+            </button>
+            <button class="pkm"><a asp-action="Index">Назад</a></button>
+        </div>
+    </form>
+</div>
