@@ -1,0 +1,32 @@
+[
+  {
+    "CurrencyCode": "RUB",
+    "CurrencyName": "Рубль",
+    "CurrencyRate": 96.63
+  },
+  {
+    "CurrencyCode": "KZT",
+    "CurrencyName": "Тенге",
+    "CurrencyRate": 466.18
+  },
+  {
+    "CurrencyCode": "BYN",
+    "CurrencyName": "Рубль",
+    "CurrencyRate": 3.26
+  },
+  {
+    "CurrencyCode": "CNY",
+    "CurrencyName": "Юань",
+    "CurrencyRate": 7.28
+  },
+  {
+    "CurrencyCode": "JPY",
+    "CurrencyName": "Йена",
+    "CurrencyRate": 147.5
+  },
+  {
+    "CurrencyCode": "JBP",
+    "CurrencyName": "Фунт",
+    "CurrencyRate": 0.8
+  }
+]
