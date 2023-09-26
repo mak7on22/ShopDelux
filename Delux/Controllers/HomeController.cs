@@ -17,7 +17,6 @@ namespace Delux.Controllers
             _logger = logger;
             _context = context;
         }
-
         public IActionResult Index(int pg = 1)
         {
             string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/currencyData.json");

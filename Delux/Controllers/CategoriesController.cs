@@ -24,13 +24,11 @@ namespace Delux.Controllers
         {
             IEnumerable<Category> categories = _context.Categories.ToList(); // Load all products into memory
             ViewBag.NameSort = sortState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
-
             switch (sortState)
             {
                 case SortState.NameAsc: categories = categories.OrderBy(p => p.CategoryName); break;
                 case SortState.NameDesc: categories = categories.OrderByDescending(p => p.CategoryName); break;
             }
-
             return View(categories);
         }
 
@@ -41,7 +39,6 @@ namespace Delux.Controllers
             {
                 return NotFound();
             }
-
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)

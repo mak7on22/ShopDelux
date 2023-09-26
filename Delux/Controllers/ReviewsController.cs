@@ -56,15 +56,13 @@ namespace Delux.Controllers
         {
             var phone = _context.Products.FirstOrDefault(p => p.ProductId == phoneId);
             if (phone == null)
-                return NotFound(); // Если телефон не найден, вернем 404 Not Found
+                return NotFound();
             if (phone.Reviews == null)
                 phone.Reviews = new List<Review>();
             // Добавить отзыв к телефону
             phone.Reviews.Add(review);
-            // Сохраните изменения в базе данных
             _context.SaveChanges();
 
-            // Перенаправление на страницу с деталями телефона с обновленными данными
             return View("Details", phone);
         }
 

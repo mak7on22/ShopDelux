@@ -14,7 +14,6 @@ namespace Delux.Controllers
     public class ProductsController : Controller
     {
         private readonly ProductContext _context;
-
         public ProductsController(ProductContext context)
         {
             _context = context;
@@ -78,7 +77,6 @@ namespace Delux.Controllers
                 .Where(p => p.Name.Contains(term))
                 .Select(p => $"{p.ProductId},{p.Name}") // Формируем строку с ProductId и Name, разделенными запятой
                 .ToList();
-
             return Content(string.Join(";", results)); // Используем точку с запятой для разделения результатов
         }
 
@@ -95,7 +93,6 @@ namespace Delux.Controllers
             .Include(p => p.Brands)
             .Include(p => p.Reviews)
             .FirstOrDefaultAsync(m => m.ProductId == id);
-
             if (phone == null)
                 return NotFound();
             return View(phone);
@@ -109,13 +106,10 @@ namespace Delux.Controllers
                 .Select(p => p.ReviewId)
                 .FirstOrDefault();
             ViewData["ReviewId"] = reviewId;
-
             List<Category> categories = _context.Categories.ToList();
             List<Brand> brands = _context.Brands.ToList();
-
             ViewData["Categories"] = categories;
             ViewData["Brands"] = brands;
-
             return View();
         }
 
@@ -142,18 +136,12 @@ namespace Delux.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
-            {
                 return NotFound();
-            }
-
             var product = await _context.Products.FindAsync(id);
             if (product == null)
-            {
                 return NotFound();
-            }
             List<Category> categories = _context.Categories.ToList();
             List<Brand> brands = _context.Brands.ToList();
-
             ViewData["Categories"] = categories;
             ViewData["Brands"] = brands;
             return View(product);
@@ -167,10 +155,7 @@ namespace Delux.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Price,Description,ImageUrl,CreatedAt,UpdatedAt,CategoryId,BrandId")] Product product)
         {
             if (id != product.ProductId)
-            {
                 return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -182,13 +167,9 @@ namespace Delux.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProductExists(product.ProductId))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -201,19 +182,13 @@ namespace Delux.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)
-            {
                 return NotFound();
-            }
-
             var product = await _context.Products
                 .Include(p => p.Brands)
                 .Include(p => p.Categories)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
             if (product == null)
-            {
                 return NotFound();
-            }
-
             return View(product);
         }
 
@@ -223,29 +198,18 @@ namespace Delux.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Products == null)
-            {
                 return Problem("Entity set 'PhoneContext.Phons' is null.");
-            }
-
             var phone = await _context.Products.FindAsync(id);
-
             if (phone != null)
             {
-                // Получаем все связанные отзывы
                 var relatedReviews = _context.Reviews.Where(r => r.ProductId == id);
-
-                // Удаление всех связанных отзывов
                 _context.Reviews.RemoveRange(relatedReviews);
 
-                // Затем удаляем сам телефон
                 _context.Products.Remove(phone);
-
                 await _context.SaveChangesAsync();
             }
-
             return RedirectToAction(nameof(Index));
         }
-
         private bool ProductExists(int id)
         {
           return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
